@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CarRentalSwingApp" default="run" basedir="">
+    <description>Build file for Car Rental Swing Application</description>
+
+    <!-- Set properties -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="/carrental-Frontend/lib"/> <!-- Explicitly resolve lib directory -->
+    <property name="main.class" value="com.Buildex.main.Main"/>
+
+    <!-- Classpath for libraries -->
+    <path id="classpath">
+        <fileset dir="lib" includes="*.jar"/>
+    </path>
+
+    <!-- Initialize directories -->
+    <target name="init">
+        <mkdir dir="${build.dir}"/>
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <!-- Compile the project -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false">
+            <classpath refid="classpath"/>
+        </javac>
+    </target>
+
+    <!-- Clean build directory -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Run the application -->
+    <target name="run" depends="clean,compile"> <!-- Added clean to ensure fresh build -->
+        <java classname="${main.class}" fork="true">
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement location="${classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+</project>
